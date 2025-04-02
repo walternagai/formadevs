@@ -108,7 +108,7 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE.md](L
 
 ## 📬 Contato
 
-Seu Nome - [walternagai@unifei.edu.br](mailto:walternagai@unifei.edu.br)
+Walter A. Nagai - [walternagai@unifei.edu.br](mailto:walternagai@unifei.edu.br)
 
 Link do projeto: [https://github.com/walternagai/formadevs](https://github.com/walternagai/formadevs)
 
