@@ -71,7 +71,20 @@ def main():
     elif pagina == "Configurações":
         exibir_pagina_configuracoes()
     else:  # Sobre
-        exibir_pagina_sobre()
+        st.markdown(""""
+        # Informações sobre a aplicação
+        Esta aplicação foi desenvolvida para ajudar professores e educadores a formarem grupos de estudantes de maneira eficiente e organizada.
+        ## Funcionalidades
+        - **Formação de Grupos**: Permite criar grupos de estudantes com base em diferentes critérios e métodos.
+        - **Importação de Dados**: Aceita entrada manual ou importação de arquivos CSV para facilitar a adição de estudantes.
+        - **Histórico de Grupos**: Armazena grupos formados anteriormente para fácil acesso e reutilização.
+        """)
+        st.markdown("## Desenvolvedores")
+        st.markdown("""
+        - **Nome 1**: [GitHub](https://github.com/nome1)
+        - **Nome 2**: [GitHub](https://github.com/nome2)
+        - **Nome 3**: [GitHub](https://github.com/nome3)
+        """)
 
 def exibir_pagina_formar_grupos():
     """
