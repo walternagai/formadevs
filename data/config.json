@@ -1,0 +1,13 @@
+{
+  "last_updated": "2026-02-07T10:04:29.002089",
+  "version": "2.0",
+  "config": {
+    "tamanho_padrao": 3,
+    "metodo_padrao": "Aleatório",
+    "redistribuir_padrao": true,
+    "permitir_maior_padrao": true,
+    "animacao_padrao": true,
+    "tema": "Azul",
+    "data_atualizacao": "2026-02-07T10:04:29.001756"
+  }
+}

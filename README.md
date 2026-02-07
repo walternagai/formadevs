@@ -15,26 +15,36 @@ FormaDevs é uma aplicação Streamlit que facilita a formação de grupos de es
   - Menu de navegação lateral
   - Temas personalizáveis
   - Visualização detalhada dos grupos
+  - Animação de sorteio com cards (v2.0)
 
 - **Entrada flexível de dados**:
   - Entrada manual (formato "Matrícula, Nome")
-  - Importação via CSV
+  - Importação via CSV com mapeamento de colunas
   - Carregamento de dados salvos anteriormente
+  - Validação de duplicatas (v2.0)
 
 - **Exportação versátil**:
   - CSV
   - Excel
   - Listas por grupo
+  - QR Codes para cada grupo (v2.0)
 
 - **Gestão de histórico**:
   - Salva grupos formados anteriormente
   - Permite reutilização de conjuntos de alunos
   - Rastreabilidade das formações de grupos
+  - Persistência automática (v2.0)
 
 - **Configurações personalizáveis**:
   - Tamanho padrão dos grupos
   - Método de formação
   - Opções de redistribuição de alunos
+  - Semente aleatória para resultados reproduzíveis
+
+- **Estatísticas visuais** (v2.0):
+  - Distribuição de grupos
+  - Visão geral dos estudantes
+  - Métricas de formação
 
 ## 📋 Pré-requisitos
 

@@ -57,11 +57,17 @@ As sugestões de melhorias são rastreadas como issues do GitHub.
 
 ### Python
 
-Siga as recomendações do PEP 8 e use flake8 para verificar seu código.
+Siga as recomendações do AGENTS.md para o estilo de código do projeto:
 - Use 4 espaços para indentação
-- Limite as linhas a 79 caracteres
+- Limite as linhas a 120 caracteres
 - Use docstrings para todas as funções, classes e métodos
 - Organize as importações em grupos: padrão, terceiros, locais
+- Use type hints para todos os parâmetros e retornos
+- Use ruff para verificação de código: `ruff check .`
+- Use mypy para verificação de tipos: `mypy .`
+- Use pytest para testes: `pytest`
+- Importações devem ser absolutas: `from logic.group_formation import formar_grupos`
+- Toda UI deve usar português
 
 ### Streamlit
 
