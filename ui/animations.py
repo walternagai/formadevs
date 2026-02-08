@@ -4,13 +4,14 @@ Contém funções para animações visuais, incluindo sorteio ao vivo com flip c
 """
 
 import time
+
 import streamlit as st
 
 
 def animacao_sorteio_flip_cards(grupos, delay=1.5):
     """
     Exibe animação de sorteio com efeito de cards virando (flip cards).
-    
+
     Args:
         grupos (list): Lista de grupos a serem revelados
         delay (float): Delay entre revelações em segundos
@@ -91,12 +92,12 @@ def animacao_sorteio_flip_cards(grupos, delay=1.5):
     }
     </style>
     """
-    
+
     st.markdown(flip_css, unsafe_allow_html=True)
-    
+
     # Container para os cards
     cards_container = st.container()
-    
+
     # Placeholders para cada card
     cards_placeholders = []
     with cards_container:
@@ -104,51 +105,55 @@ def animacao_sorteio_flip_cards(grupos, delay=1.5):
         for i in range(len(grupos)):
             with cols[i % 3]:
                 cards_placeholders.append(st.empty())
-    
+
     # Revelar grupos um por um
     for i, grupo in enumerate(grupos):
         # Mostrar card fechado
-        cards_placeholders[i].markdown(f"""
+        cards_placeholders[i].markdown(
+            f"""
         <div class="flip-card" id="card-{i}">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     <h2>?</h2>
-                    <p>Grupo {i+1}</p>
+                    <p>Grupo {i + 1}</p>
                 </div>
                 <div class="flip-card-back">
-                    <h3>Grupo {i+1}</h3>
+                    <h3>Grupo {i + 1}</h3>
                     <p>{len(grupo)} estudantes</p>
                 </div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
-    
+        """,
+            unsafe_allow_html=True,
+        )
+
     # Pausa inicial
     time.sleep(1)
-    
+
     # Revelar cada grupo com animação
     for i, grupo in enumerate(grupos):
         # Aguardar delay
         time.sleep(delay)
-        
+
         # Criar conteúdo do card revelado
         estudantes_html = ""
         for j, estudante in enumerate(grupo[:5], 1):  # Mostrar até 5 estudantes
             estudantes_html += f"<p>{j}. {estudante.get('completo', '')}</p>"
-        
+
         if len(grupo) > 5:
             estudantes_html += f"<p><em>... e mais {len(grupo) - 5} estudantes</em></p>"
-        
+
         # Atualizar card com efeito de virada
-        cards_placeholders[i].markdown(f"""
+        cards_placeholders[i].markdown(
+            f"""
         <div class="flip-card flipped grupo-revelado" id="card-{i}-revealed">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     <h2>?</h2>
-                    <p>Grupo {i+1}</p>
+                    <p>Grupo {i + 1}</p>
                 </div>
                 <div class="flip-card-back">
-                    <h3>Grupo {i+1}</h3>
+                    <h3>Grupo {i + 1}</h3>
                     <p>{len(grupo)} estudantes</p>
                     <div style="font-size: 12px; text-align: left; margin-top: 10px;">
                         {estudantes_html}
@@ -156,8 +161,10 @@ def animacao_sorteio_flip_cards(grupos, delay=1.5):
                 </div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
-    
+        """,
+            unsafe_allow_html=True,
+        )
+
     # Efeito de confete ao final
     time.sleep(0.5)
     adicionar_confete()
@@ -190,14 +197,14 @@ def adicionar_confete():
 def animacao_progresso(etapa, total, mensagem=""):
     """
     Exibe uma barra de progresso animada.
-    
+
     Args:
         etapa (int): Etapa atual
         total (int): Total de etapas
         mensagem (str): Mensagem opcional
     """
     progresso = etapa / total
-    
+
     progress_html = f"""
     <style>
     .progress-container {
@@ -227,45 +234,51 @@ def animacao_progresso(etapa, total, mensagem=""):
     </div>
     <p style="text-align: center; color: #666;">{mensagem} ({etapa}/{total})</p>
     """
-    
+
     st.markdown(progress_html, unsafe_allow_html=True)
 
 
 def animacao_contador(numero, duracao=2.0):
     """
     Exibe animação de contador crescente.
-    
+
     Args:
         numero (int): Número final
         duracao (float): Duração da animação em segundos
     """
     placeholder = st.empty()
-    
+
     steps = 30
     for i in range(steps + 1):
         valor_atual = int(numero * (i / steps))
-        placeholder.markdown(f"""
+        placeholder.markdown(
+            f"""
         <div style="text-align: center; font-size: 48px; font-weight: bold; color: #4CAF50;">
             {valor_atual}
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
         time.sleep(duracao / steps)
-    
+
     # Mostrar valor final
-    placeholder.markdown(f"""
+    placeholder.markdown(
+        f"""
     <div style="text-align: center; font-size: 48px; font-weight: bold; color: #4CAF50;">
         {numero}
     </div>
     <div style="text-align: center; color: #666;">
         estudantes carregados
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 def efeito_pulso(elemento_id="info"):
     """
     Adiciona efeito de pulso a um elemento.
-    
+
     Args:
         elemento_id (str): ID do elemento CSS
     """

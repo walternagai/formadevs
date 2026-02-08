@@ -4,7 +4,6 @@ Implementa persistência dupla: localStorage (via JavaScript) e JSON backup.
 """
 
 import json
-import os
 from datetime import datetime
 from pathlib import Path
 
@@ -24,37 +23,37 @@ def ensure_data_dir():
 def save_history(historico):
     """
     Salva o histórico de grupos em arquivo JSON.
-    
+
     Args:
         historico (list): Lista de grupos formados
-        
+
     Returns:
         bool: True se salvou com sucesso
     """
     try:
         ensure_data_dir()
-        
+
         # Adicionar metadados
         data_to_save = {
             "last_updated": datetime.now().isoformat(),
             "version": "2.0",
             "count": len(historico),
-            "historico": historico
+            "historico": historico,
         }
-        
+
         # Salvar no arquivo principal
-        with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
+        with open(HISTORY_FILE, "w", encoding="utf-8") as f:
             json.dump(data_to_save, f, ensure_ascii=False, indent=2)
-        
+
         # Também criar backup
         backup_filename = f"history_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         backup_path = BACKUP_DIR / backup_filename
-        with open(backup_path, 'w', encoding='utf-8') as f:
+        with open(backup_path, "w", encoding="utf-8") as f:
             json.dump(data_to_save, f, ensure_ascii=False, indent=2)
-        
+
         # Limitar número de backups (manter últimos 10)
         limit_backups(10)
-        
+
         return True
     except Exception as e:
         print(f"Erro ao salvar histórico: {e}")
@@ -64,13 +63,13 @@ def save_history(historico):
 def load_history():
     """
     Carrega o histórico de grupos do arquivo JSON.
-    
+
     Returns:
         list: Lista de grupos ou lista vazia se não existir
     """
     try:
         if HISTORY_FILE.exists():
-            with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 return data.get("historico", [])
         return []
@@ -82,25 +81,25 @@ def load_history():
 def save_config(config):
     """
     Salva as configurações da aplicação.
-    
+
     Args:
         config (dict): Dicionário de configurações
-        
+
     Returns:
         bool: True se salvou com sucesso
     """
     try:
         ensure_data_dir()
-        
+
         config_data = {
             "last_updated": datetime.now().isoformat(),
             "version": "2.0",
-            "config": config
+            "config": config,
         }
-        
-        with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+
+        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
             json.dump(config_data, f, ensure_ascii=False, indent=2)
-        
+
         return True
     except Exception as e:
         print(f"Erro ao salvar configurações: {e}")
@@ -110,13 +109,13 @@ def save_config(config):
 def load_config():
     """
     Carrega as configurações da aplicação.
-    
+
     Returns:
         dict: Configurações ou dicionário vazio
     """
     try:
         if CONFIG_FILE.exists():
-            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 return data.get("config", {})
         return {}
@@ -128,15 +127,18 @@ def load_config():
 def limit_backups(max_backups=10):
     """
     Limita o número de arquivos de backup.
-    
+
     Args:
         max_backups (int): Número máximo de backups a manter
     """
     try:
         if BACKUP_DIR.exists():
-            backups = sorted(BACKUP_DIR.glob("history_*.json"), 
-                           key=lambda x: x.stat().st_mtime, reverse=True)
-            
+            backups = sorted(
+                BACKUP_DIR.glob("history_*.json"),
+                key=lambda x: x.stat().st_mtime,
+                reverse=True,
+            )
+
             for old_backup in backups[max_backups:]:
                 old_backup.unlink()
     except Exception as e:
@@ -146,31 +148,31 @@ def limit_backups(max_backups=10):
 def export_all_data(filename=None):
     """
     Exporta todos os dados da aplicação para um arquivo JSON.
-    
+
     Args:
         filename (str, optional): Nome do arquivo de exportação
-        
+
     Returns:
         str: Caminho do arquivo exportado ou None
     """
     try:
         ensure_data_dir()
-        
+
         if filename is None:
             filename = f"formadevs_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-        
+
         export_path = DATA_DIR / filename
-        
+
         data = {
             "export_date": datetime.now().isoformat(),
             "version": "2.0",
             "historico": load_history(),
-            "config": load_config()
+            "config": load_config(),
         }
-        
-        with open(export_path, 'w', encoding='utf-8') as f:
+
+        with open(export_path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        
+
         return str(export_path)
     except Exception as e:
         print(f"Erro ao exportar dados: {e}")
@@ -180,25 +182,25 @@ def export_all_data(filename=None):
 def import_all_data(file_path):
     """
     Importa dados de um arquivo JSON.
-    
+
     Args:
         file_path (str): Caminho do arquivo a importar
-        
+
     Returns:
         tuple: (bool, str) - (sucesso, mensagem)
     """
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        
+
         # Salvar histórico
         if "historico" in data:
             save_history(data["historico"])
-        
+
         # Salvar configurações
         if "config" in data:
             save_config(data["config"])
-        
+
         return True, "Dados importados com sucesso!"
     except Exception as e:
         return False, f"Erro ao importar dados: {e}"
@@ -207,7 +209,7 @@ def import_all_data(file_path):
 def clear_history():
     """
     Limpa o histórico de grupos.
-    
+
     Returns:
         bool: True se limpou com sucesso
     """
@@ -223,7 +225,7 @@ def clear_history():
 def reset_all():
     """
     Reseta todos os dados da aplicação.
-    
+
     Returns:
         bool: True se resetou com sucesso
     """
